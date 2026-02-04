@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doit // manual</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --fg: #111111;
+            --acc: #444444;
+            --code-bg: #f4f4f4;
+            --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            --spacing: 1.5rem;
+            --max-width: 680px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #111111;
+                --fg: #eeeeee;
+                --acc: #aaaaaa;
+                --code-bg: #1a1a1a;
+            }
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            font-size: 16px;
+            padding: var(--spacing);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1, h2, h3 { line-height: 1.2; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        h1 { font-size: 2.5rem; margin-top: 0; font-weight: 800; }
+        h2 { font-size: 1.5rem; border-bottom: 1px solid var(--acc); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--acc); }
+        p, ul, ol { margin-bottom: 1.5rem; }
+        li { margin-left: 1.5rem; padding-left: 0.5rem; margin-bottom: 0.5rem; }
+        a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; }
+        a:hover { text-decoration-thickness: 2px; }
+
+        /* Code Blocks */
+        code {
+            font-family: var(--font-mono);
+            background: var(--code-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            overflow-x: auto;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            font-size: 0.85rem;
+            color: var(--fg);
+        }
+
+        /* Utility */
+        .tagline { font-size: 1.2rem; color: var(--acc); margin-bottom: 3rem; font-weight: 300; }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--bg);
+            color: var(--fg);
+            border: 1px solid var(--acc);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+        .copy-btn:hover { opacity: 1; }
+        
+        /* Mobile */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            :root { --spacing: 1rem; }
+        }
+
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px dashed var(--acc); font-size: 0.8rem; color: var(--acc); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>doit</h1>
+        <p class="tagline">A command-line tool that uses AI to generate and execute terminal commands from natural language descriptions.</p>
+    </header>
+
+    <main>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p><code>doit</code> is a macOS terminal assistant powered by local AI (via Ollama) that translates your plain English requests into executable shell commands. It ensures safety by always asking for confirmation and can answer technical questions in a conversational mode.</p>
+        </section>
+
+        <section id="features">
+            <h2>Features</h2>
+            <ul>
+                <li><strong>Natural Language to Commands:</strong> Describe tasks, get commands.</li>
+                <li><strong>Ask Mode:</strong> Get technical explanations with the <code>-a</code> flag.</li>
+                <li><strong>Smart Management:</strong> Automatically starts/stops the Ollama server.</li>
+                <li><strong>Safety First:</strong> Confirm commands before they run.</li>
+            </ul>
+        </section>
+
+        <section id="installation">
+            <h2>Installation</h2>
+            <p><strong>Requirements:</strong> macOS, Python 3.x, <a href="https://ollama.ai">Ollama</a>.</p>
+            
+            <h3>1. Prepare Environment</h3>
+            <pre><code>pip install ollama rich requests
+ollama pull ministral-3:8b</code></pre>
+
+            <h3>2. Install Script</h3>
+            <p>Download the source code (bottom of page), save it as <code>doit</code>, and make it executable.</p>
+            <pre><code>chmod +x doit
+sudo mv doit /usr/local/bin/</code></pre>
+        </section>
+
+        <section id="usage">
+            <h2>Usage</h2>
+            
+            <h3>Command Mode</h3>
+            <p>Generate and execute commands:</p>
+            <pre><code>doit "find all python files in current directory"
+doit "compress Documents folder"</code></pre>
+
+            <h3>Ask Mode</h3>
+            <p>Ask technical questions without executing code:</p>
+            <pre><code>doit -a "how do I change file permissions?"
+doit -a "difference between chmod and chown"</code></pre>
+        </section>
+
+        <section id="source">
+            <h2>Source Code</h2>
+            <p>Save the following content to a file named <code>doit</code>.</p>
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>#!/usr/bin/env python3
+import sys
+import time
+import subprocess
+import signal
+import warnings
+import requests
+import ollama
+from rich.console import Console
+from rich.panel import Panel
+from rich.syntax import Syntax
+from rich.style import Style
+
+# --- CONFIGURATION ---
+MODEL = "ministral-3:8b"
+OLLAMA_API_URL = "http://127.0.0.1:11434"
+console = Console()
+
+# --- SILENCE WARNINGS ---
+warnings.filterwarnings("ignore", message=".*urllib3 v2 only supports OpenSSL.*")
+
+def cleanup_zombies():
+    subprocess.run(["pkill", "-9", "-f", "ollama"], 
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+def is_ollama_running():
+    try:
+        requests.get(OLLAMA_API_URL, timeout=0.5)
+        return True
+    except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout):
+        return False
+
+def start_ollama():
+    # Use Rich's status spinner
+    with console.status(f"[bold yellow]⚡ Waking up {MODEL}...[/bold yellow]", spinner="dots"):
+        process = subprocess.Popen(
+            ["ollama", "serve"], 
+            stdout=subprocess.DEVNULL, 
+            stderr=subprocess.DEVNULL
+        )
+        retries = 0
+        while not is_ollama_running():
+            time.sleep(0.5)
+            retries += 1
+            if retries > 20:
+                console.print("[bold red]Error: Could not start Ollama.[/bold red]")
+                sys.exit(1)
+    return process
+
+def stop_ollama(process):
+    if process:
+        process.terminate()
+        try:
+            process.wait(timeout=2)
+        except subprocess.TimeoutExpired:
+            process.kill()
+
+def sanitize_command(raw: str) -> str:
+    raw = raw.strip()
+
+    # Remove fenced code blocks ```...```
+    if raw.startswith("```"):
+        lines = raw.splitlines()
+        lines = [ln for ln in lines if not ln.strip().startswith("```")]
+        raw = "\n".join(lines).strip()
+
+    # Remove single backticks wrapping the whole command
+    if raw.startswith("`") and raw.endswith("`") and len(raw) > 2:
+        raw = raw[1:-1].strip()
+
+    # Use only the first non-empty line
+    for line in raw.splitlines():
+        line = line.strip()
+        if line:
+            return line
+    return ""
+
+# --- MAIN LOGIC ---
+server_process = None
+
+def signal_handler(sig, frame):
+    console.print(f"\n[bold red]🛑 Interrupted! Shutting down...[/bold red]")
+    if server_process:
+        stop_ollama(server_process)
+    sys.exit(0)
+
+def main():
+    global server_process
+    signal.signal(signal.SIGINT, signal_handler)
+
+    # --- DETECT MODE ---
+    ask_mode = False
+    if "-a" in sys.argv:
+        ask_mode = True
+        sys.argv.remove("-a")
+
+    if len(sys.argv) < 2:
+        console.print(f"[bold]Usage:[/bold] {sys.argv[0]} [-a] 'your query here'")
+        sys.exit(1)
+
+    query = " ".join(sys.argv[1:])
+
+    # Clean start logic
+    if not is_ollama_running():
+        cleanup_zombies()
+        
+    was_already_running = is_ollama_running()
+
+    try:
+        if not was_already_running:
+            server_process = start_ollama()
+        
+        # --- SYSTEM PROMPT ---
+        if ask_mode:
+            system_instruction = (
+                "You are a helpful, concise MacOS technical assistant. "
+                "Answer the user's question clearly and accurately."
+            )
+        else:
+            system_instruction = (
+                'You are a macOS Terminal expert. '
+                'Output ONLY the valid macOS raw command string. '
+                'Do not use markdown blocks. Do not offer explanations.'
+                'Do not generate any commands that can cause catastrophic damage to the system'
+            )
+
+        # --- THE THINKING ANIMATION ---
+        content = ""
+        with console.status(f"[bold cyan]🧠 {MODEL} is thinking...[/bold cyan]", spinner="aesthetic"):
+            response = ollama.chat(
+                model=MODEL,
+                messages=[
+                    {'role': 'system', 'content': system_instruction},
+                    {'role': 'user', 'content': query}
+                ],
+                options={"keep_alive": 0} 
+            )
+            content = response['message']['content'].strip()
+
+        # --- DISPLAY OUTPUT ---
+        if ask_mode:
+            console.print(Panel(content, title="[bold cyan]Answer[/bold cyan]", border_style="cyan"))
+        else:
+            command = sanitize_command(content)
+            if not command:
+                console.print("[bold red]Error:[/bold red] Model returned an empty command.")
+                return
+
+            # Highlight the command code
+            syntax = Syntax(command, "bash", theme="monokai", line_numbers=False)
+            console.print(Panel(syntax, title="[bold green]Suggested Command[/bold green]", border_style="green"))
+            
+            confirm = console.input(f"[grey50][?][/grey50] Run this? ([bold]Y[/bold]/n): ").lower()
+            if confirm in ['', 'y', 'yes']:
+                subprocess.run(command, shell=True)
+            else:
+                console.print("[dim]Aborted.[/dim]")
+
+    except Exception as e:
+        console.print(f"[bold red]Error:[/bold red] {e}")
+
+    finally:
+        if not was_already_running and server_process:
+            stop_ollama(server_process)
+            console.print(f"[dim]💤 {MODEL} put back to sleep.[/dim]")
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>This is a utility script provided as-is under the MIT license.</p>
+    </footer>
+
+</div>
+
+<script>
+    function copyCode(btn) {
+        const code = btn.nextElementSibling.innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = 'Copy', 2000);
+        });
+    }
+</script>
+
+</body>
+</html>
