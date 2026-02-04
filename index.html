@@ -10,6 +10,8 @@
             --fg: #111111;
             --acc: #444444;
             --code-bg: #f4f4f4;
+            --warn-bg: #fff4e5;
+            --warn-fg: #663c00;
             --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
             --spacing: 1.5rem;
@@ -22,6 +24,8 @@
                 --fg: #eeeeee;
                 --acc: #aaaaaa;
                 --code-bg: #1a1a1a;
+                --warn-bg: #2b2111;
+                --warn-fg: #ffbd66;
             }
         }
 
@@ -76,8 +80,19 @@
             color: var(--fg);
         }
 
-        /* Utility */
-        .tagline { font-size: 1.2rem; color: var(--acc); margin-bottom: 3rem; font-weight: 300; }
+        /* Custom Sections */
+        .tagline { font-size: 1.2rem; color: var(--acc); margin-bottom: 2rem; font-weight: 300; }
+        
+        .warning-box {
+            background: var(--warn-bg);
+            color: var(--warn-fg);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--warn-fg);
+            font-size: 0.95rem;
+        }
+
         .copy-btn {
             position: absolute;
             top: 0.5rem;
@@ -112,25 +127,30 @@
         <p class="tagline">A command-line tool that uses AI to generate and execute terminal commands from natural language descriptions.</p>
     </header>
 
+    <div class="warning-box">
+        <strong>⚠️ Important Disclaimer:</strong> <br>
+        This tool uses Artificial Intelligence to generate system commands. While "Safe Mode" is enabled by default, AI can make mistakes. <strong>Always review the generated command carefully</strong> before confirming execution. The authors are not responsible for unintended data loss or system changes.
+    </div>
+
     <main>
         <section id="overview">
             <h2>Overview</h2>
-            <p><code>doit</code> is a macOS terminal assistant powered by local AI (via Ollama) that translates your plain English requests into executable shell commands. It ensures safety by always asking for confirmation and can answer technical questions in a conversational mode.</p>
+            <p><code>doit</code> is a terminal assistant powered by local AI (via Ollama). It translates plain English requests into executable shell commands and can answer technical questions.</p>
+            <p>While originally developed for <strong>macOS</strong>, the codebase is pure Python. It can be easily adapted for Linux or Windows subsystems with minor tweaks to the system-specific commands.</p>
         </section>
 
-        <section id="features">
-            <h2>Features</h2>
+        <section id="requirements">
+            <h2>System Requirements</h2>
             <ul>
-                <li><strong>Natural Language to Commands:</strong> Describe tasks, get commands.</li>
-                <li><strong>Ask Mode:</strong> Get technical explanations with the <code>-a</code> flag.</li>
-                <li><strong>Smart Management:</strong> Automatically starts/stops the Ollama server.</li>
-                <li><strong>Safety First:</strong> Confirm commands before they run.</li>
+                <li><strong>Operating System:</strong> macOS (recommended) or Linux</li>
+                <li><strong>Python:</strong> Version 3.8 or higher</li>
+                <li><strong>Ollama:</strong> Must be installed and running locally</li>
+                <li><strong>Hardware:</strong> 8GB RAM minimum (16GB recommended for faster inference)</li>
             </ul>
         </section>
 
         <section id="installation">
             <h2>Installation</h2>
-            <p><strong>Requirements:</strong> macOS, Python 3.x, <a href="https://ollama.ai">Ollama</a>.</p>
             
             <h3>1. Prepare Environment</h3>
             <pre><code>pip install ollama rich requests
@@ -140,6 +160,19 @@ ollama pull ministral-3:8b</code></pre>
             <p>Download the source code (bottom of page), save it as <code>doit</code>, and make it executable.</p>
             <pre><code>chmod +x doit
 sudo mv doit /usr/local/bin/</code></pre>
+        </section>
+
+        <section id="configuration">
+            <h2>Configuration</h2>
+            <p>You can customize the script by editing the variables at the top of the file.</p>
+            
+            <h3>Changing the AI Model</h3>
+            <p>By default, it uses <code>ministral-3:8b</code>. To use a different model (like <code>llama3</code> or <code>codellama</code>), simply pull the model in Ollama and update the script:</p>
+            <pre><code># Inside the script:
+MODEL = "llama3"  # Change this to your preferred model</code></pre>
+
+            <h3>Using on Linux/Windows</h3>
+            <p>If running on non-macOS systems, you may need to manually adjust specific system calls within the script (e.g., changing <code>open</code> to <code>xdg-open</code>).</p>
         </section>
 
         <section id="usage">
@@ -327,6 +360,15 @@ def main():
 
 if __name__ == "__main__":
     main()</code></pre>
+        </section>
+
+        <section id="support">
+            <h2>Support & Contributing</h2>
+            <p>If you find this tool helpful, please consider starring the project or sponsoring the developer.</p>
+            <ul>
+                <li><a href="https://github.com/Clevis22/doit" target="_blank">⭐ View on GitHub</a></li>
+                <li><a href="https://github.com/sponsors/Clevis22" target="_blank">💜 Sponsor @Clevis22</a></li>
+            </ul>
         </section>
     </main>
 
