@@ -19,7 +19,7 @@ A command-line tool that uses AI to generate and execute terminal commands from 
 - Python 3.x
 - macOS
 - [Ollama](https://ollama.ai) installed
-- `ministral-3:8b` model pulled (`ollama pull ministral-3:8b`)
+- `llama3.1:8b` model pulled (`ollama pull llama3.1:8b`)
 
 ### Python Dependencies
 
@@ -70,7 +70,7 @@ pls -a "explain the find command"
 
 1. **Ollama Detection**: Checks if Ollama server is running
 2. **Auto-Start**: Starts Ollama automatically if needed (with a neat loading animation)
-3. **AI Processing**: Sends your query to the `ministral-3:8b` model
+3. **AI Processing**: Sends your query to the `llama3.1:8b` model
 4. **Smart Output**: 
    - Command mode: Shows executable command with confirmation prompt
    - Ask mode: Displays helpful answer in a formatted panel
@@ -81,7 +81,7 @@ pls -a "explain the find command"
 Edit these variables at the top of the script to customize:
 
 ```python
-MODEL = "ministral-3:8b"              # Change AI model
+MODEL = "llama3.1:8b"              # Change AI model
 OLLAMA_API_URL = "http://127.0.0.1:11434"  # Change Ollama endpoint
 ```
 
@@ -116,7 +116,7 @@ pls -a "how do I monitor network traffic?"
 
 **Model not found:**
 ```bash
-ollama pull ministral-3:8b
+ollama pull llama3.1:8b
 ```
 
 **Permission errors:**
