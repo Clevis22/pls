@@ -1,10 +1,10 @@
-# doit
+# pls
 
 A command-line tool that uses AI to generate and execute terminal commands from natural language descriptions.
 
 ## Overview
 
-`doit` is a macOS terminal assistant powered by local AI (via Ollama) that translates your plain English requests into executable shell commands. It can also answer technical questions about macOS in a conversational mode.
+`pls` is a macOS terminal assistant powered by local AI (via Ollama) that translates your plain English requests into executable shell commands. It can also answer technical questions about macOS in a conversational mode.
 
 ## Features
 
@@ -32,11 +32,11 @@ pip install ollama rich requests
 1. Clone or download the script
 2. Make it executable:
    ```bash
-   chmod +x doit
+   chmod +x pls
    ```
 3. (Optional) Move to your PATH:
    ```bash
-   sudo mv doit /usr/local/bin/
+   sudo mv pls /usr/local/bin/
    ```
 
 ## Usage
@@ -46,9 +46,9 @@ pip install ollama rich requests
 Generate and execute commands from natural language:
 
 ```bash
-doit "find all python files in current directory"
-doit "compress Documents folder"
-doit "show disk usage"
+pls "find all python files in current directory"
+pls "compress Documents folder"
+pls "show disk usage"
 ```
 
 The tool will:
@@ -61,9 +61,9 @@ The tool will:
 Get answers to technical questions:
 
 ```bash
-doit -a "how do I change file permissions?"
-doit -a "what's the difference between chmod and chown?"
-doit -a "explain the find command"
+pls -a "how do I change file permissions?"
+pls -a "what's the difference between chmod and chown?"
+pls -a "explain the find command"
 ```
 
 ## How It Works
@@ -89,16 +89,16 @@ OLLAMA_API_URL = "http://127.0.0.1:11434"  # Change Ollama endpoint
 
 ```bash
 # Find large files
-doit "find files larger than 100MB"
+pls "find files larger than 100MB"
 
 # Git operations
-doit "create a new git branch called feature-x"
+pls "create a new git branch called feature-x"
 
 # System info
-doit "show CPU temperature"
+pls "show CPU temperature"
 
 # Ask for help
-doit -a "how do I monitor network traffic?"
+pls -a "how do I monitor network traffic?"
 ```
 
 ## Safety Features
@@ -120,7 +120,7 @@ ollama pull ministral-3:8b
 ```
 
 **Permission errors:**
-- Make sure the script is executable: `chmod +x doit`
+- Make sure the script is executable: `chmod +x pls`
 
 ## License
 
