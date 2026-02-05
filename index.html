@@ -202,7 +202,7 @@ from rich.syntax import Syntax
 from rich.style import Style
 
 # --- CONFIGURATION ---
-MODEL = "ministral-3:8b"
+MODEL = "llama3.1:8b"
 OLLAMA_API_URL = "http://127.0.0.1:11434"
 console = Console()
 
@@ -301,18 +301,19 @@ def main():
         # --- SYSTEM PROMPT ---
         if ask_mode:
             system_instruction = (
-                "You are a helpful, concise MacOS technical assistant. "
-                "Answer the user's question clearly and accurately."
+                "You are a concise macOS (Apple Silicon) assistant. "
+                "Answer clearly and accurately."
             )
         else:
             system_instruction = (
-                'You are a macOS Terminal expert. '
-                'Output ONLY the valid macOS raw command string. '
-                'Do not use markdown blocks. Do not offer explanations.'
-                'Do not generate any commands that can cause catastrophic damage to the system'
-                'Do not generate multi line commands.'
-                'Combine multi-line commands into a SINGLE LINE using && or ; where possible.'
-                'always use the simplest command possible to achieve the goal.'
+                "You are an expert macOS (Apple Silicon) terminal assistant. "
+                "Output ONLY the raw, single-line command string. No markdown. No explanations.\n"
+                "GUIDELINES:\n"
+                "1. TOOLS: Use modern native tools (pmset for battery, ipconfig for IP, diskutil, etc). "
+                "Avoid Linux-specific flags (e.g. use 'grep -E', never 'grep -P').\n"
+                "2. FORMAT: Chain commands with '&&' or '|' into a single line. "
+                "Be robust with regex (match units like '%' to avoid false positives).\n"
+                "3. OUTPUT: Print to STDOUT by default. Only use '| pbcopy' if the user explicitly asks to 'copy' or 'clip'."
             )
 
         # --- THE THINKING ANIMATION ---
@@ -322,6 +323,12 @@ def main():
                 model=MODEL,
                 messages=[
                     {'role': 'system', 'content': system_instruction},
+                    # --- TEACH BY EXAMPLE ---
+                    {'role': 'user', 'content': 'get battery'},
+                    {'role': 'assistant', 'content': 'pmset -g batt | grep -o "[0-9]*%"'},
+                    {'role': 'user', 'content': 'copy ip address'},
+                    {'role': 'assistant', 'content': 'ipconfig getifaddr en0 | pbcopy'},
+                    # --- REAL QUERY ---
                     {'role': 'user', 'content': query}
                 ],
                 options={"keep_alive": 0} 
