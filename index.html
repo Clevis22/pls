@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>doit // manual</title>
+    <title>pls // manual</title>
     <style>
         :root {
             --bg: #ffffff;
@@ -123,14 +123,14 @@
 <div class="container">
 
     <header>
-        <h1>doit</h1>
+        <h1>pls</h1>
         <p class="tagline">A command-line tool that uses AI to generate and execute terminal commands from natural language descriptions.</p>
     </header>
 
     <main>
         <section id="overview">
             <h2>Overview</h2>
-            <p><code>doit</code> is a terminal assistant powered by local AI (via Ollama). It translates plain English requests into executable shell commands and can answer technical questions.</p>
+            <p><code>pls</code> is a terminal assistant powered by local AI (via Ollama). It translates plain English requests into executable shell commands and can answer technical questions.</p>
             <p>While originally developed for <strong>macOS</strong>, the codebase is pure Python. It can be easily adapted for Linux or Windows subsystems with minor tweaks to the system-specific commands.</p>
         </section>
 
@@ -152,9 +152,9 @@
 ollama pull ministral-3:8b</code></pre>
 
             <h3>2. Install Script</h3>
-            <p>Download the source code (bottom of page), save it as <code>doit</code>, and make it executable.</p>
-            <pre><code>chmod +x doit
-sudo mv doit /usr/local/bin/</code></pre>
+            <p>Download the source code (bottom of page), save it as <code>pls</code>, and make it executable.</p>
+            <pre><code>chmod +x pls
+sudo mv pls /usr/local/bin/</code></pre>
         </section>
 
         <section id="configuration">
@@ -175,18 +175,18 @@ MODEL = "llama3"  # Change this to your preferred model</code></pre>
             
             <h3>Command Mode</h3>
             <p>Generate and execute commands:</p>
-            <pre><code>doit "find all python files in current directory"
-doit "compress Documents folder"</code></pre>
+            <pre><code>pls "find all python files in current directory"
+pls "compress Documents folder"</code></pre>
 
             <h3>Ask Mode</h3>
             <p>Ask technical questions without executing code:</p>
-            <pre><code>doit -a "how do I change file permissions?"
-doit -a "difference between chmod and chown"</code></pre>
+            <pre><code>pls -a "how do I change file permissions?"
+pls -a "difference between chmod and chown"</code></pre>
         </section>
 
         <section id="source">
             <h2>Source Code</h2>
-            <p>Save the following content to a file named <code>doit</code>.</p>
+            <p>Save the following content to a file named <code>pls</code>.</p>
             <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>#!/usr/bin/env python3
 import sys
 import time
@@ -361,7 +361,7 @@ if __name__ == "__main__":
             <h2>Support & Contributing</h2>
             <p>If you find this tool helpful, please consider starring the project or sponsoring the developer.</p>
             <ul>
-                <li><a href="https://github.com/Clevis22/doit" target="_blank">⭐ View on GitHub</a></li>
+                <li><a href="https://github.com/Clevis22/pls" target="_blank">⭐ View on GitHub</a></li>
                 <li><a href="https://github.com/sponsors/Clevis22" target="_blank">💜 Sponsor @Clevis22</a></li>
             </ul>
         </section>
